@@ -15,7 +15,7 @@ do
 			echo -e "\n" $example " compile FAILED \n" 
 		else
 			echo -e "\n" $example "compile SUCCESS \n" 
-			mv ./bin/$example ./bin/$example".bin"
+			mv ./bin/$example ./bin/$example"_unpatched_.bin"
 		fi
 		cd ../
 	fi

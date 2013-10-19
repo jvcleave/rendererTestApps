@@ -26,9 +26,10 @@ public:
         fbo.begin();
 			ofClear(0, 0, 0, 0);
 			shader.begin();
+				shader.setUniformTexture("myTexture", testImage.getTextureReference(), testImage.getTextureReference().texData.textureID);
 				testImage.draw(0, 0);
 			shader.end();
-        fbo.end();
+		fbo.end();
     }
 	
     void draw()

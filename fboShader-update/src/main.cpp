@@ -5,52 +5,42 @@ class ofApp : public ofBaseApp{
 public:
     ofFbo fbo;
     ofImage testImage;
-	bool doUpdateFboInUpdate;
+    ofShader shader;
 	
     void setup()
 	{
         ofSetLogLevel(OF_LOG_VERBOSE);
-		doUpdateFboInUpdate = false;
 		
         testImage.loadImage("of.png");
-        fbo.allocate(testImage.getWidth(), testImage.getHeight());
+		shader.load("shader");
+		
+        fbo.allocate(ofGetWidth(), ofGetHeight());
 		fbo.begin();
 			ofClear(0, 0, 0, 0);
 		fbo.end();
+        
     }
-	
-	void updateFbo()
-	{
-		fbo.begin();
-			ofClear(0, 0, 0, 0);
-			testImage.draw(0, 0);
-        fbo.end();
-	}
 	
     void update()
 	{
-        if (ofGetFrameNum()%500 == 0) 
-		{
-			doUpdateFboInUpdate = !doUpdateFboInUpdate;
-		}
+        fbo.begin();
+			ofClear(0, 0, 0, 0);
+			shader.begin();
+				testImage.draw(0, 0);
+			shader.end();
+        fbo.end();
     }
-
+	
     void draw()
 	{
-		if(!doUpdateFboInUpdate) updateFbo();
         fbo.draw(0, 0);
-		stringstream info;
-		if (doUpdateFboInUpdate) 
-		{
-			info << "UPDATING FBO IN update()" << "\n";
-		}else 
-		{
-			info << "UPDATING FBO IN draw()" << "\n";
-		}
-		info << ofGetFrameRate() << "\n";
 		
+		stringstream info;
+		info << "UPDATING FBO IN update()" << "\n";
+		info << "This text should be yellow" << "\n";
 		ofDrawBitmapStringHighlight(info.str(), testImage.getWidth(), 100, ofColor::black, ofColor::yellow);
-		ofCircle(ofGetWidth()/2, ofGetHeight()/2, 100);
+		
+		ofCircle(100, 400, 100);
 		
     }
 };

@@ -2,4 +2,5 @@ obj
 *.app
 */bin/*
 !*/bin/data
+!*/bin/*.bin
 *._*
